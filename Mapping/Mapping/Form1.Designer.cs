@@ -48,6 +48,8 @@
             this.buildingTextBox = new System.Windows.Forms.TextBox();
             this.labelFloorNo = new System.Windows.Forms.Label();
             this.floorTextBox = new System.Windows.Forms.TextBox();
+            this.pointTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.pointTypeValueTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,7 +93,7 @@
             // 
             // sizeWidthTextBox
             // 
-            this.sizeWidthTextBox.Location = new System.Drawing.Point(90, 98);
+            this.sizeWidthTextBox.Location = new System.Drawing.Point(93, 98);
             this.sizeWidthTextBox.Name = "sizeWidthTextBox";
             this.sizeWidthTextBox.Size = new System.Drawing.Size(60, 20);
             this.sizeWidthTextBox.TabIndex = 3;
@@ -119,7 +121,7 @@
             // 
             // sizeHeightTextBox
             // 
-            this.sizeHeightTextBox.Location = new System.Drawing.Point(90, 124);
+            this.sizeHeightTextBox.Location = new System.Drawing.Point(93, 124);
             this.sizeHeightTextBox.Name = "sizeHeightTextBox";
             this.sizeHeightTextBox.Size = new System.Drawing.Size(60, 20);
             this.sizeHeightTextBox.TabIndex = 6;
@@ -127,7 +129,7 @@
             // 
             // sizeOKButton
             // 
-            this.sizeOKButton.Location = new System.Drawing.Point(37, 152);
+            this.sizeOKButton.Location = new System.Drawing.Point(14, 152);
             this.sizeOKButton.Name = "sizeOKButton";
             this.sizeOKButton.Size = new System.Drawing.Size(89, 23);
             this.sizeOKButton.TabIndex = 7;
@@ -148,7 +150,7 @@
             // 
             // pointDeleteButton
             // 
-            this.pointDeleteButton.Location = new System.Drawing.Point(34, 459);
+            this.pointDeleteButton.Location = new System.Drawing.Point(13, 457);
             this.pointDeleteButton.Name = "pointDeleteButton";
             this.pointDeleteButton.Size = new System.Drawing.Size(92, 23);
             this.pointDeleteButton.TabIndex = 9;
@@ -159,7 +161,7 @@
             // 
             // pointConfirmButton
             // 
-            this.pointConfirmButton.Location = new System.Drawing.Point(34, 488);
+            this.pointConfirmButton.Location = new System.Drawing.Point(13, 484);
             this.pointConfirmButton.Name = "pointConfirmButton";
             this.pointConfirmButton.Size = new System.Drawing.Size(92, 23);
             this.pointConfirmButton.TabIndex = 10;
@@ -170,7 +172,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(34, 517);
+            this.saveButton.Location = new System.Drawing.Point(13, 536);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(92, 23);
             this.saveButton.TabIndex = 11;
@@ -210,14 +212,14 @@
             this.labelBuildingName.AutoSize = true;
             this.labelBuildingName.Location = new System.Drawing.Point(12, 49);
             this.labelBuildingName.Name = "labelBuildingName";
-            this.labelBuildingName.Size = new System.Drawing.Size(78, 13);
+            this.labelBuildingName.Size = new System.Drawing.Size(81, 13);
             this.labelBuildingName.TabIndex = 16;
-            this.labelBuildingName.Text = "Building Name:";
+            this.labelBuildingName.Text = "Building Name: ";
             this.labelBuildingName.Visible = false;
             // 
             // buildingTextBox
             // 
-            this.buildingTextBox.Location = new System.Drawing.Point(90, 47);
+            this.buildingTextBox.Location = new System.Drawing.Point(93, 47);
             this.buildingTextBox.Name = "buildingTextBox";
             this.buildingTextBox.Size = new System.Drawing.Size(60, 20);
             this.buildingTextBox.TabIndex = 15;
@@ -228,24 +230,48 @@
             this.labelFloorNo.AutoSize = true;
             this.labelFloorNo.Location = new System.Drawing.Point(12, 74);
             this.labelFloorNo.Name = "labelFloorNo";
-            this.labelFloorNo.Size = new System.Drawing.Size(53, 13);
+            this.labelFloorNo.Size = new System.Drawing.Size(56, 13);
             this.labelFloorNo.TabIndex = 18;
-            this.labelFloorNo.Text = "Floor No.:";
+            this.labelFloorNo.Text = "Floor No.: ";
             this.labelFloorNo.Visible = false;
             // 
             // floorTextBox
             // 
-            this.floorTextBox.Location = new System.Drawing.Point(90, 72);
+            this.floorTextBox.Location = new System.Drawing.Point(93, 72);
             this.floorTextBox.Name = "floorTextBox";
             this.floorTextBox.Size = new System.Drawing.Size(60, 20);
             this.floorTextBox.TabIndex = 17;
             this.floorTextBox.Visible = false;
+            // 
+            // pointTypeComboBox
+            // 
+            this.pointTypeComboBox.AllowDrop = true;
+            this.pointTypeComboBox.FormattingEnabled = true;
+            this.pointTypeComboBox.Items.AddRange(new object[] {
+            "Normal (Default)",
+            "Elevator",
+            "Connector"});
+            this.pointTypeComboBox.Location = new System.Drawing.Point(14, 511);
+            this.pointTypeComboBox.Name = "pointTypeComboBox";
+            this.pointTypeComboBox.Size = new System.Drawing.Size(91, 21);
+            this.pointTypeComboBox.TabIndex = 20;
+            this.pointTypeComboBox.Text = "Point Type";
+            // 
+            // pointTypeValueTextBox
+            // 
+            this.pointTypeValueTextBox.Location = new System.Drawing.Point(111, 512);
+            this.pointTypeValueTextBox.Name = "pointTypeValueTextBox";
+            this.pointTypeValueTextBox.Size = new System.Drawing.Size(40, 20);
+            this.pointTypeValueTextBox.TabIndex = 21;
+            this.pointTypeValueTextBox.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(932, 566);
+            this.Controls.Add(this.pointTypeValueTextBox);
+            this.Controls.Add(this.pointTypeComboBox);
             this.Controls.Add(this.labelFloorNo);
             this.Controls.Add(this.floorTextBox);
             this.Controls.Add(this.labelBuildingName);
@@ -296,6 +322,8 @@
         private System.Windows.Forms.TextBox buildingTextBox;
         private System.Windows.Forms.Label labelFloorNo;
         private System.Windows.Forms.TextBox floorTextBox;
+        private System.Windows.Forms.ComboBox pointTypeComboBox;
+        private System.Windows.Forms.TextBox pointTypeValueTextBox;
     }
 }
 

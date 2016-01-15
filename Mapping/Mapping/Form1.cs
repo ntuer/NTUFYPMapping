@@ -117,6 +117,8 @@ namespace Mapping
                 sizeWidthTextBox.Visible = false;
                 sizeHeightTextBox.Visible = false;
                 sizeOKButton.Visible = false;
+                labelBuildingName.Text += buildingName;
+                labelFloorNo.Text += floorName;
                 sizeWidthLabel.Text = "Width: " + mapWidth.ToString();
                 sizeHeightLabel.Text = "Height: " + mapHeight.ToString();
                 pointListBox.Visible = true;
@@ -698,7 +700,7 @@ namespace Mapping
             String fileToSave = saveHeader + saveBuildingName + saveFloorNo + saveMapSize + saveBody + saveFooter;
 
             SaveFileDialog saveFile = new SaveFileDialog();
-            saveFile.FileName = ".conf";
+            saveFile.FileName = buildingName + "_" + floorName + ".conf";
             saveFile.Filter = "Conf files (*.conf)|*.conf|All files (*.*)|*.*";
 
             if (saveFile.ShowDialog() == DialogResult.OK)
