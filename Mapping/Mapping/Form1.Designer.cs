@@ -249,13 +249,15 @@
             this.pointTypeComboBox.FormattingEnabled = true;
             this.pointTypeComboBox.Items.AddRange(new object[] {
             "Normal (Default)",
-            "Elevator",
-            "Connector"});
+            "Elevator No.",
+            "Connector to"});
             this.pointTypeComboBox.Location = new System.Drawing.Point(14, 511);
             this.pointTypeComboBox.Name = "pointTypeComboBox";
             this.pointTypeComboBox.Size = new System.Drawing.Size(91, 21);
             this.pointTypeComboBox.TabIndex = 20;
             this.pointTypeComboBox.Text = "Point Type";
+            this.pointTypeComboBox.Visible = false;
+            this.pointTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.pointTypeComboBox_SelectedIndexChanged);
             // 
             // pointTypeValueTextBox
             // 

@@ -23,13 +23,16 @@ namespace Mapping
         List<Edge> edgeList;
         double EDGE_SLOP_PRECISION = 0.2;
         int EDGE_PRECISION = 5;
-       
+        int MARKER_SIZE_NORMAL = 3, MARKER_SIZE_ELEVATOR = 5, MARKER_SIZE_CONNECTOR = 7;
+        
+        enum POINT_TYPE {Normal, Elevator, Connector};
+        POINT_TYPE pointType;
         ArrayList xArray = new ArrayList(), yArray = new ArrayList(), x1Array = new ArrayList(), y1Array = new ArrayList(), x2Array = new ArrayList(), y2Array = new ArrayList(), x1Index = new ArrayList(), x2Index = new ArrayList();
         Node firstNode = null;
         Node secondNode = null;
         Node node1 = null;
         Node node2 = null;
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -93,6 +96,8 @@ namespace Mapping
                 pointListBox.Visible = false;
                 pointDeleteButton.Visible = false;
                 pointConfirmButton.Visible = false;
+                pointTypeComboBox.Visible = false;
+                pointTypeComboBox.SelectedIndex = 0;
                 saveButton.Visible = false;
 
             }
@@ -124,6 +129,7 @@ namespace Mapping
                 pointListBox.Visible = true;
                 pointDeleteButton.Visible = true;
                 pointConfirmButton.Visible = true;
+                pointTypeComboBox.Visible = true;
                 saveButton.Visible = true;
                 mainLabel.Text = "Map is good! Please proceed to select points.";
 
@@ -169,6 +175,30 @@ namespace Mapping
                 int x = Convert.ToInt32(clickedX);
                 int y = Convert.ToInt32(clickedY);
                 Node clickedNode = new Node(x, y);//create an object of the clicked node --zpx
+
+
+                //add more properties if there pointType is not normal --zpx
+                if (pointType == POINT_TYPE.Elevator)
+                {
+                    clickedNode.pointType = Node.POINT_TYPE.Elevator;
+                    if (pointTypeValueTextBox.Text != "")
+                    {
+                        int elevatorGroupNum = int.Parse(pointTypeValueTextBox.Text);
+                        clickedNode.setElevatorGroupNum(elevatorGroupNum);
+                    }                       
+                }
+                else if (pointType == POINT_TYPE.Connector)
+                {
+                    clickedNode.pointType = Node.POINT_TYPE.Connector;
+                    clickedNode.setConnectorName(pointTypeValueTextBox.Text);
+                    
+                }
+
+
+
+
+
+
 
                 
                 /*-----------------------------------------------*/
@@ -432,6 +462,27 @@ namespace Mapping
             return false;
         }
 
+        private void pointTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (pointTypeComboBox.SelectedIndex == 0)
+            {
+                pointType = POINT_TYPE.Normal;
+                pointTypeValueTextBox.Visible = false;
+            }
+
+            else if (pointTypeComboBox.SelectedIndex == 1)
+            {
+                pointType = POINT_TYPE.Elevator;
+                pointTypeValueTextBox.Visible = true;
+            }
+
+            else if (pointTypeComboBox.SelectedIndex == 2)
+            {
+                pointType = POINT_TYPE.Connector;
+                pointTypeValueTextBox.Visible = true;
+            }
+        }
+
         private void refreshEdgeList()//need to find node based on x1Array()
         {
             edgeList.Clear();
@@ -651,13 +702,14 @@ namespace Mapping
                 pointConfirmed = true;
                 pointConfirmButton.Text = "Add Point";
                 mainLabel.Text = "Points confirmed! Please click two points to confirm an edge.";
+                pointTypeComboBox.Enabled = false;
             }
             else
             {
                 pointConfirmed = false;
                 pointConfirmButton.Text = "Add Edge";
                 mainLabel.Text = "Please repick points.";
-
+                pointTypeComboBox.Enabled = true;
                 //reset the adding edge action
                 node1 = null;
                 node2 = null;
@@ -680,7 +732,17 @@ namespace Mapping
             for (int i=0;i<xArray.Count;i++)
             {
                 //saveBody = saveBody + "<p id=\"" + (i).ToString() + "\" x=\"" + xArray[i].ToString() + "\" y=\"" + yArray[i].ToString() + "\" connect=\"";
-                saveBody = saveBody + "<p id=\"" + nodeList[i].getId() + "\" x=\"" + xArray[i].ToString() + "\" y=\"" + yArray[i].ToString() + "\" connect=\"";
+                string typeValue = "null";
+                if (nodeList[i].pointType == Node.POINT_TYPE.Elevator)
+                {
+                    typeValue = nodeList[i].getElevatorGroupNum().ToString();
+                }
+                else if ((nodeList[i].pointType == Node.POINT_TYPE.Connector))
+                {
+                    typeValue = nodeList[i].getConnectorName();
+                }
+
+                saveBody = saveBody + "<p id=\"" + nodeList[i].getId() + "\" type=\"" + nodeList[i].pointType + "\" typeValue=\"" + typeValue + "\" x=\"" + xArray[i].ToString() + "\" y=\"" + yArray[i].ToString() + "\" connect=\"";
                 string pointLine = "";
                 foreach(Node node in nodeList[i].getNeighbors())
                 {
@@ -733,13 +795,42 @@ namespace Mapping
                     int y_temp = (int)(double.Parse(yArray[i].ToString()) / mapHeight * (pictureBoxHeight - offset * 2) + offset);
                     if (focusIndex == i)
                     {
-                        pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp - 3, y_temp - 3, x_temp + 3, y_temp + 3);
-                        pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp + 3, y_temp - 3, x_temp - 3, y_temp + 3);
+                        if (nodeList[i].pointType == Node.POINT_TYPE.Normal)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp - MARKER_SIZE_NORMAL, y_temp - MARKER_SIZE_NORMAL, x_temp + MARKER_SIZE_NORMAL, y_temp + MARKER_SIZE_NORMAL);
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp + MARKER_SIZE_NORMAL, y_temp - MARKER_SIZE_NORMAL, x_temp - MARKER_SIZE_NORMAL, y_temp + MARKER_SIZE_NORMAL);
+                        }
+                        else if (nodeList[i].pointType == Node.POINT_TYPE.Elevator)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp - MARKER_SIZE_ELEVATOR, y_temp - MARKER_SIZE_ELEVATOR, x_temp + MARKER_SIZE_ELEVATOR, y_temp + MARKER_SIZE_ELEVATOR);
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp + MARKER_SIZE_ELEVATOR, y_temp - MARKER_SIZE_ELEVATOR, x_temp - MARKER_SIZE_ELEVATOR, y_temp + MARKER_SIZE_ELEVATOR);
+                        }
+                        else if (nodeList[i].pointType == Node.POINT_TYPE.Connector)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp - MARKER_SIZE_CONNECTOR, y_temp - MARKER_SIZE_CONNECTOR, x_temp + MARKER_SIZE_CONNECTOR, y_temp + MARKER_SIZE_CONNECTOR);
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp + MARKER_SIZE_CONNECTOR, y_temp - MARKER_SIZE_CONNECTOR, x_temp - MARKER_SIZE_CONNECTOR, y_temp + MARKER_SIZE_CONNECTOR);
+
+                        }
+
                     }
                     else
                     {
-                        pictureGraphic.DrawLine(new Pen(Color.Red), x_temp - 3, y_temp - 3, x_temp + 3, y_temp + 3);
-                        pictureGraphic.DrawLine(new Pen(Color.Red), x_temp + 3, y_temp - 3, x_temp - 3, y_temp + 3);
+                        if (nodeList[i].pointType == Node.POINT_TYPE.Normal)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp - MARKER_SIZE_NORMAL, y_temp - MARKER_SIZE_NORMAL, x_temp + MARKER_SIZE_NORMAL, y_temp + MARKER_SIZE_NORMAL);
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp + MARKER_SIZE_NORMAL, y_temp - MARKER_SIZE_NORMAL, x_temp - MARKER_SIZE_NORMAL, y_temp + MARKER_SIZE_NORMAL);
+                        }
+                        else if (nodeList[i].pointType == Node.POINT_TYPE.Elevator)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp - MARKER_SIZE_ELEVATOR, y_temp - MARKER_SIZE_ELEVATOR, x_temp + MARKER_SIZE_ELEVATOR, y_temp + MARKER_SIZE_ELEVATOR);
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp + MARKER_SIZE_ELEVATOR, y_temp - MARKER_SIZE_ELEVATOR, x_temp - MARKER_SIZE_ELEVATOR, y_temp + MARKER_SIZE_ELEVATOR);
+                        }
+                        else if (nodeList[i].pointType == Node.POINT_TYPE.Connector)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp - MARKER_SIZE_CONNECTOR, y_temp - MARKER_SIZE_CONNECTOR, x_temp + MARKER_SIZE_CONNECTOR, y_temp + MARKER_SIZE_CONNECTOR);
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp + MARKER_SIZE_CONNECTOR, y_temp - MARKER_SIZE_CONNECTOR, x_temp - MARKER_SIZE_CONNECTOR, y_temp + MARKER_SIZE_CONNECTOR);
+
+                        }
                     }
                 }
             }
@@ -752,13 +843,41 @@ namespace Mapping
                     int y_temp = (int)(double.Parse(yArray[i].ToString()) / mapHeight * pictureBoxHeight);
                     if (focusIndex == i)
                     {
-                        pictureGraphic.DrawLine(new Pen(Color.Green), x_temp - 3, y_temp - 3, x_temp + 3, y_temp + 3);
-                        pictureGraphic.DrawLine(new Pen(Color.Green), x_temp + 3, y_temp - 3, x_temp - 3, y_temp + 3);
+                        if (nodeList[i].pointType == Node.POINT_TYPE.Normal)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp - MARKER_SIZE_NORMAL, y_temp - MARKER_SIZE_NORMAL, x_temp + MARKER_SIZE_NORMAL, y_temp + MARKER_SIZE_NORMAL);
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp + MARKER_SIZE_NORMAL, y_temp - MARKER_SIZE_NORMAL, x_temp - MARKER_SIZE_NORMAL, y_temp + MARKER_SIZE_NORMAL);
+                        }
+                        else if (nodeList[i].pointType == Node.POINT_TYPE.Elevator)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp - MARKER_SIZE_ELEVATOR, y_temp - MARKER_SIZE_ELEVATOR, x_temp + MARKER_SIZE_ELEVATOR, y_temp + MARKER_SIZE_ELEVATOR);
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp + MARKER_SIZE_ELEVATOR, y_temp - MARKER_SIZE_ELEVATOR, x_temp - MARKER_SIZE_ELEVATOR, y_temp + MARKER_SIZE_ELEVATOR);
+                        }
+                        else if (nodeList[i].pointType == Node.POINT_TYPE.Connector)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp - MARKER_SIZE_CONNECTOR, y_temp - MARKER_SIZE_CONNECTOR, x_temp + MARKER_SIZE_CONNECTOR, y_temp + MARKER_SIZE_CONNECTOR);
+                            pictureGraphic.DrawLine(new Pen(Color.Navy), x_temp + MARKER_SIZE_CONNECTOR, y_temp - MARKER_SIZE_CONNECTOR, x_temp - MARKER_SIZE_CONNECTOR, y_temp + MARKER_SIZE_CONNECTOR);
+
+                        }
                     }
                     else
                     {
-                        pictureGraphic.DrawLine(new Pen(Color.Red), x_temp - 3, y_temp - 3, x_temp + 3, y_temp + 3);
-                        pictureGraphic.DrawLine(new Pen(Color.Red), x_temp + 3, y_temp - 3, x_temp - 3, y_temp + 3);
+                        if (nodeList[i].pointType == Node.POINT_TYPE.Normal)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp - MARKER_SIZE_NORMAL, y_temp - MARKER_SIZE_NORMAL, x_temp + MARKER_SIZE_NORMAL, y_temp + MARKER_SIZE_NORMAL);
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp + MARKER_SIZE_NORMAL, y_temp - MARKER_SIZE_NORMAL, x_temp - MARKER_SIZE_NORMAL, y_temp + MARKER_SIZE_NORMAL);
+                        }
+                        else if (nodeList[i].pointType == Node.POINT_TYPE.Elevator)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp - MARKER_SIZE_ELEVATOR, y_temp - MARKER_SIZE_ELEVATOR, x_temp + MARKER_SIZE_ELEVATOR, y_temp + MARKER_SIZE_ELEVATOR);
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp + MARKER_SIZE_ELEVATOR, y_temp - MARKER_SIZE_ELEVATOR, x_temp - MARKER_SIZE_ELEVATOR, y_temp + MARKER_SIZE_ELEVATOR);
+                        }
+                        else if (nodeList[i].pointType == Node.POINT_TYPE.Connector)
+                        {
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp - MARKER_SIZE_CONNECTOR, y_temp - MARKER_SIZE_CONNECTOR, x_temp + MARKER_SIZE_CONNECTOR, y_temp + MARKER_SIZE_CONNECTOR);
+                            pictureGraphic.DrawLine(new Pen(Color.Red), x_temp + MARKER_SIZE_CONNECTOR, y_temp - MARKER_SIZE_CONNECTOR, x_temp - MARKER_SIZE_CONNECTOR, y_temp + MARKER_SIZE_CONNECTOR);
+
+                        }
                     }
                 }
             }

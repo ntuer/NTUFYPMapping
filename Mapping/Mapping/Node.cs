@@ -8,14 +8,21 @@ namespace Mapping
 {
     class Node
     {
-        private int id, x, y;
+        private int id, x, y, elevatorGroupNum;
+        private string connetorName;
         private List<Node> neighbors;
+        public enum POINT_TYPE
+        {
+            Normal, Elevator, Connector
+        };
+        public POINT_TYPE pointType;
 
         public Node(int x, int y)
         {
             this.x = x;
             this.y = y;
             neighbors = new List<Node>();
+            pointType = POINT_TYPE.Normal;
         }
 
         public Node(int id, int x, int y)
@@ -24,6 +31,7 @@ namespace Mapping
             this.x = x;
             this.y = y;
             neighbors = new List<Node>();
+            pointType = POINT_TYPE.Normal;
         }
 
         public void setId(int id)
@@ -84,6 +92,26 @@ namespace Mapping
         public List<Node> getNeighbors()
         {
             return neighbors;
+        }
+
+        public string getConnectorName()
+        {
+            return this.connetorName;
+        }
+
+        public void setConnectorName(string name)
+        {
+            this.connetorName = name;
+        }
+
+        public int getElevatorGroupNum()
+        {
+            return this.elevatorGroupNum;
+        }
+
+        public void setElevatorGroupNum(int num)
+        {
+            this.elevatorGroupNum = num;
         }
     }
 }
