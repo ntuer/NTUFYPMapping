@@ -18,6 +18,7 @@ namespace Mapping
         Bitmap imagePointer;
         bool pointConfirmed = false;
         double imageWidth = 0, imageHeight = 0, mapWidth = 0, mapHeight = 0;
+        string buildingName = "", floorName = "";
         List<Node> nodeList;
         List<Edge> edgeList;
         double EDGE_SLOP_PRECISION = 0.2;
@@ -78,6 +79,10 @@ namespace Mapping
                 pointListBox.Items.Clear();
 
                 mainLabel.Text = "Please input map size";
+                labelBuildingName.Visible = true;
+                labelFloorNo.Visible = true;
+                buildingTextBox.Visible = true;
+                floorTextBox.Visible = true;
                 sizeWidthTextBox.Visible = true;
                 sizeHeightTextBox.Visible = true;
                 sizeWidthLabel.Visible = true;
@@ -98,6 +103,8 @@ namespace Mapping
         //Setting the size of the map
         private void sizeOKButton_Click(object sender, EventArgs e)
         {
+            buildingName = buildingTextBox.Text;
+            floorName = floorTextBox.Text;
             mapWidth = double.Parse(sizeWidthTextBox.Text);
             mapHeight = double.Parse(sizeHeightTextBox.Text);
             if (mapWidth > 0 && mapHeight > 0)
@@ -105,6 +112,8 @@ namespace Mapping
                 imageWidth = (double)imagePointer.Size.Width;
                 imageHeight = (double)imagePointer.Size.Height;
 
+                buildingTextBox.Visible = false;
+                floorTextBox.Visible = false;
                 sizeWidthTextBox.Visible = false;
                 sizeHeightTextBox.Visible = false;
                 sizeOKButton.Visible = false;
@@ -289,6 +298,11 @@ namespace Mapping
                 //node info
                 XmlNode NTUTag = confFile.DocumentElement.SelectSingleNode("/NTU");
 
+                //get building and floor info
+                XmlNode buildingTag = confFile.SelectSingleNode("/NTU/building");
+                XmlNode floorTag = confFile.SelectSingleNode("/NTU/floor");
+                buildingName = buildingTag.InnerText;
+                floorName = floorTag.InnerText;
 
                 //get the map size info
                 XmlNode widthTag = confFile.SelectSingleNode("/NTU/width");
@@ -299,6 +313,8 @@ namespace Mapping
                 mainLabel.Text = "width: " + width + ", height: " + height;
 
                 //initialize sizeOkButton click event
+                buildingTextBox.Text = buildingName;
+                floorTextBox.Text = floorName;
                 sizeWidthTextBox.Text = width;
                 sizeHeightTextBox.Text = height;
                 sizeOKButton.PerformClick();
@@ -652,6 +668,8 @@ namespace Mapping
         private void saveButton_Click(object sender, EventArgs e)
         {
             string saveHeader = "<?xml version=\"1.0\" encoding=\"gb2312\"?>\r\n<NTU>\r\n";
+            string saveBuildingName = "<building>" + buildingName + "</building>\r\n";
+            string saveFloorNo = "<floor>" + floorName + "</floor>\r\n";
             string saveMapSize = "<width>" + mapWidth/10 + "</width>\r\n";
             saveMapSize += "<height>" + mapHeight/10 + "</height>\r\n";            
             string saveFooter = "</NTU>";
@@ -677,7 +695,7 @@ namespace Mapping
             }
 
             //save conf file
-            String fileToSave = saveHeader + saveMapSize + saveBody + saveFooter;
+            String fileToSave = saveHeader + saveBuildingName + saveFloorNo + saveMapSize + saveBody + saveFooter;
 
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.FileName = ".conf";

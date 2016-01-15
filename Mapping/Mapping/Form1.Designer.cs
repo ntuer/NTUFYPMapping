@@ -44,6 +44,10 @@
             this.PiontLabel = new System.Windows.Forms.Label();
             this.PointLabel = new System.Windows.Forms.Label();
             this.btnLoadConf = new System.Windows.Forms.Button();
+            this.labelBuildingName = new System.Windows.Forms.Label();
+            this.buildingTextBox = new System.Windows.Forms.TextBox();
+            this.labelFloorNo = new System.Windows.Forms.Label();
+            this.floorTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,16 +91,16 @@
             // 
             // sizeWidthTextBox
             // 
-            this.sizeWidthTextBox.Location = new System.Drawing.Point(53, 52);
+            this.sizeWidthTextBox.Location = new System.Drawing.Point(90, 98);
             this.sizeWidthTextBox.Name = "sizeWidthTextBox";
-            this.sizeWidthTextBox.Size = new System.Drawing.Size(51, 20);
+            this.sizeWidthTextBox.Size = new System.Drawing.Size(60, 20);
             this.sizeWidthTextBox.TabIndex = 3;
             this.sizeWidthTextBox.Visible = false;
             // 
             // sizeWidthLabel
             // 
             this.sizeWidthLabel.AutoSize = true;
-            this.sizeWidthLabel.Location = new System.Drawing.Point(9, 55);
+            this.sizeWidthLabel.Location = new System.Drawing.Point(12, 100);
             this.sizeWidthLabel.Name = "sizeWidthLabel";
             this.sizeWidthLabel.Size = new System.Drawing.Size(38, 13);
             this.sizeWidthLabel.TabIndex = 4;
@@ -106,7 +110,7 @@
             // sizeHeightLabel
             // 
             this.sizeHeightLabel.AutoSize = true;
-            this.sizeHeightLabel.Location = new System.Drawing.Point(9, 81);
+            this.sizeHeightLabel.Location = new System.Drawing.Point(12, 126);
             this.sizeHeightLabel.Name = "sizeHeightLabel";
             this.sizeHeightLabel.Size = new System.Drawing.Size(41, 13);
             this.sizeHeightLabel.TabIndex = 5;
@@ -115,17 +119,17 @@
             // 
             // sizeHeightTextBox
             // 
-            this.sizeHeightTextBox.Location = new System.Drawing.Point(53, 78);
+            this.sizeHeightTextBox.Location = new System.Drawing.Point(90, 124);
             this.sizeHeightTextBox.Name = "sizeHeightTextBox";
-            this.sizeHeightTextBox.Size = new System.Drawing.Size(51, 20);
+            this.sizeHeightTextBox.Size = new System.Drawing.Size(60, 20);
             this.sizeHeightTextBox.TabIndex = 6;
             this.sizeHeightTextBox.Visible = false;
             // 
             // sizeOKButton
             // 
-            this.sizeOKButton.Location = new System.Drawing.Point(112, 63);
+            this.sizeOKButton.Location = new System.Drawing.Point(37, 152);
             this.sizeOKButton.Name = "sizeOKButton";
-            this.sizeOKButton.Size = new System.Drawing.Size(39, 23);
+            this.sizeOKButton.Size = new System.Drawing.Size(89, 23);
             this.sizeOKButton.TabIndex = 7;
             this.sizeOKButton.Text = "OK";
             this.sizeOKButton.UseVisualStyleBackColor = true;
@@ -135,16 +139,16 @@
             // pointListBox
             // 
             this.pointListBox.FormattingEnabled = true;
-            this.pointListBox.Location = new System.Drawing.Point(12, 104);
+            this.pointListBox.Location = new System.Drawing.Point(12, 185);
             this.pointListBox.Name = "pointListBox";
-            this.pointListBox.Size = new System.Drawing.Size(139, 303);
+            this.pointListBox.Size = new System.Drawing.Size(139, 264);
             this.pointListBox.TabIndex = 8;
             this.pointListBox.Visible = false;
             this.pointListBox.SelectedIndexChanged += new System.EventHandler(this.pointListBox_SelectedIndexChanged);
             // 
             // pointDeleteButton
             // 
-            this.pointDeleteButton.Location = new System.Drawing.Point(12, 414);
+            this.pointDeleteButton.Location = new System.Drawing.Point(34, 459);
             this.pointDeleteButton.Name = "pointDeleteButton";
             this.pointDeleteButton.Size = new System.Drawing.Size(92, 23);
             this.pointDeleteButton.TabIndex = 9;
@@ -155,7 +159,7 @@
             // 
             // pointConfirmButton
             // 
-            this.pointConfirmButton.Location = new System.Drawing.Point(12, 443);
+            this.pointConfirmButton.Location = new System.Drawing.Point(34, 488);
             this.pointConfirmButton.Name = "pointConfirmButton";
             this.pointConfirmButton.Size = new System.Drawing.Size(92, 23);
             this.pointConfirmButton.TabIndex = 10;
@@ -166,7 +170,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(12, 472);
+            this.saveButton.Location = new System.Drawing.Point(34, 517);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(92, 23);
             this.saveButton.TabIndex = 11;
@@ -201,11 +205,51 @@
             this.btnLoadConf.UseVisualStyleBackColor = true;
             this.btnLoadConf.Click += new System.EventHandler(this.btnLoadConf_Click);
             // 
+            // labelBuildingName
+            // 
+            this.labelBuildingName.AutoSize = true;
+            this.labelBuildingName.Location = new System.Drawing.Point(12, 49);
+            this.labelBuildingName.Name = "labelBuildingName";
+            this.labelBuildingName.Size = new System.Drawing.Size(78, 13);
+            this.labelBuildingName.TabIndex = 16;
+            this.labelBuildingName.Text = "Building Name:";
+            this.labelBuildingName.Visible = false;
+            // 
+            // buildingTextBox
+            // 
+            this.buildingTextBox.Location = new System.Drawing.Point(90, 47);
+            this.buildingTextBox.Name = "buildingTextBox";
+            this.buildingTextBox.Size = new System.Drawing.Size(60, 20);
+            this.buildingTextBox.TabIndex = 15;
+            this.buildingTextBox.Visible = false;
+            // 
+            // labelFloorNo
+            // 
+            this.labelFloorNo.AutoSize = true;
+            this.labelFloorNo.Location = new System.Drawing.Point(12, 74);
+            this.labelFloorNo.Name = "labelFloorNo";
+            this.labelFloorNo.Size = new System.Drawing.Size(53, 13);
+            this.labelFloorNo.TabIndex = 18;
+            this.labelFloorNo.Text = "Floor No.:";
+            this.labelFloorNo.Visible = false;
+            // 
+            // floorTextBox
+            // 
+            this.floorTextBox.Location = new System.Drawing.Point(90, 72);
+            this.floorTextBox.Name = "floorTextBox";
+            this.floorTextBox.Size = new System.Drawing.Size(60, 20);
+            this.floorTextBox.TabIndex = 17;
+            this.floorTextBox.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(932, 566);
+            this.Controls.Add(this.labelFloorNo);
+            this.Controls.Add(this.floorTextBox);
+            this.Controls.Add(this.labelBuildingName);
+            this.Controls.Add(this.buildingTextBox);
             this.Controls.Add(this.btnLoadConf);
             this.Controls.Add(this.PointLabel);
             this.Controls.Add(this.PiontLabel);
@@ -248,6 +292,10 @@
         private System.Windows.Forms.Label PiontLabel;
         private System.Windows.Forms.Label PointLabel;
         private System.Windows.Forms.Button btnLoadConf;
+        private System.Windows.Forms.Label labelBuildingName;
+        private System.Windows.Forms.TextBox buildingTextBox;
+        private System.Windows.Forms.Label labelFloorNo;
+        private System.Windows.Forms.TextBox floorTextBox;
     }
 }
 

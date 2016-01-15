@@ -58,3 +58,12 @@ C:\Users\owner\Dropbox\FYP\C#\Mapping Software 15 OCT\Mapping\Mapping\obj\Debug\
 C:\Users\owner\Dropbox\FYP\C#\Mapping Software 15 OCT\Mapping\Mapping\obj\Debug\Mapping.Form1.resources
 C:\Users\owner\Dropbox\FYP\C#\Mapping Software 15 OCT\Mapping\Mapping\obj\Debug\Mapping.Properties.Resources.resources
 C:\Users\owner\Dropbox\FYP\C#\Mapping Software 15 OCT\Mapping\Mapping\obj\Debug\Mapping.csproj.GenerateResource.Cache
+C:\Users\owner\Desktop\FYP\Mapping Software 15 OCT\Mapping\Mapping\bin\Debug\Mapping.exe.config
+C:\Users\owner\Desktop\FYP\Mapping Software 15 OCT\Mapping\Mapping\obj\Debug\Mapping.exe
+C:\Users\owner\Desktop\FYP\Mapping Software 15 OCT\Mapping\Mapping\obj\Debug\Mapping.pdb
+C:\Users\owner\Desktop\FYP\Mapping Software 15 OCT\Mapping\Mapping\bin\Debug\Mapping.exe
+C:\Users\owner\Desktop\FYP\Mapping Software 15 OCT\Mapping\Mapping\bin\Debug\Mapping.pdb
+C:\Users\owner\Desktop\FYP\Mapping Software 15 OCT\Mapping\Mapping\obj\Debug\Mapping.csprojResolveAssemblyReference.cache
+C:\Users\owner\Desktop\FYP\Mapping Software 15 OCT\Mapping\Mapping\obj\Debug\Mapping.Form1.resources
+C:\Users\owner\Desktop\FYP\Mapping Software 15 OCT\Mapping\Mapping\obj\Debug\Mapping.Properties.Resources.resources
+C:\Users\owner\Desktop\FYP\Mapping Software 15 OCT\Mapping\Mapping\obj\Debug\Mapping.csproj.GenerateResource.Cache
