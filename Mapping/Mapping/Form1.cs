@@ -228,13 +228,15 @@ namespace Mapping
                         xArray.Add(x);
                         yArray.Add(y);
 
-                        //add the item to the pointListBox
-                        pointListBox.Items.Add(x.ToString() + ", " + y.ToString());
+                        
 
                         //set the property of the clickedNode --zpx
                         
                         nodeList.Add(clickedNode);
                         clickedNode.setId(nodeList.IndexOf(clickedNode));
+
+                        //add the item to the pointListBox
+                        pointListBox.Items.Add(clickedNode.getId() + " (" + x.ToString() + ", " + y.ToString() + ")");
 
                         pointListBox.SelectedIndex = pointListBox.Items.Count - 1;
 
@@ -358,12 +360,28 @@ namespace Mapping
                     List<int> neighborIDList = new List<int>();//a list of nodeID of neighbors
 
                     int id = Convert.ToInt32(pointNode.Attributes["id"].InnerText);
+                    string type = pointNode.Attributes["type"].InnerText;
+                    string typeValue = pointNode.Attributes["typeValue"].InnerText;
                     int x = Convert.ToInt32(pointNode.Attributes["x"].InnerText);
                     int y = Convert.ToInt32(pointNode.Attributes["y"].InnerText);
                     Node node = new Node(id, x, y);
+                    if (type == POINT_TYPE.Normal.ToString())
+                    {
+                        node.pointType = Node.POINT_TYPE.Normal;
+                    }
+                    else if (type == POINT_TYPE.Elevator.ToString())
+                    {
+                        node.pointType = Node.POINT_TYPE.Elevator;
+                        node.setElevatorGroupNum(int.Parse(typeValue));
+                    }
+                    else if (type == POINT_TYPE.Connector.ToString())
+                    {
+                        node.pointType = Node.POINT_TYPE.Connector;
+                        node.setConnectorName(typeValue);
+                    }
                     xArray.Add(x);
                     yArray.Add(y);
-                    pointListBox.Items.Add(x.ToString() + ", " + y.ToString());
+                    pointListBox.Items.Add(node.getId() + " (" + x.ToString() + ", " + y.ToString() + ")");
 
                     nodeList.Add(node);
 
@@ -642,6 +660,7 @@ namespace Mapping
                     node.removeNeighbor(nodeList[temp]);//remove it from other node's neighbor list
                     
                 }
+                pointListBox.Items.RemoveAt(temp);
                 nodeList[temp].clearNeighbors();//clear its neighbors
                 nodeList[temp] = null;//set it to null
                 nodeList.RemoveAt(temp);
@@ -650,7 +669,7 @@ namespace Mapping
                 //possible need to update edgeList
                 refreshEdgeList();
 
-                pointListBox.Items.RemoveAt(temp);
+                //pointListBox.Items.RemoveAt(temp);
                 xArray.RemoveAt(temp);
                 yArray.RemoveAt(temp);
 
@@ -690,6 +709,21 @@ namespace Mapping
             if (pointListBox.SelectedIndex != -1)
             {
                 mainLabel.Text = "ID= " + pointListBox.SelectedIndex + "   " + "x=" + xArray[pointListBox.SelectedIndex] + "   " + "y=" + yArray[pointListBox.SelectedIndex];
+                Node node = nodeList[pointListBox.SelectedIndex];
+                if (node.pointType == Node.POINT_TYPE.Normal)
+                {
+                    pointTypeComboBox.SelectedIndex = 0;
+                }
+                else if (node.pointType == Node.POINT_TYPE.Elevator)
+                {
+                    pointTypeComboBox.SelectedIndex = 1;
+                    pointTypeValueTextBox.Text = node.getElevatorGroupNum().ToString();
+                }
+                else if (node.pointType == Node.POINT_TYPE.Connector)
+                {
+                    pointTypeComboBox.SelectedIndex = 2;
+                    pointTypeValueTextBox.Text = node.getConnectorName().ToString();
+                }
             }
             
         }
@@ -732,7 +766,7 @@ namespace Mapping
             for (int i=0;i<xArray.Count;i++)
             {
                 //saveBody = saveBody + "<p id=\"" + (i).ToString() + "\" x=\"" + xArray[i].ToString() + "\" y=\"" + yArray[i].ToString() + "\" connect=\"";
-                string typeValue = "null";
+                string typeValue = "";
                 if (nodeList[i].pointType == Node.POINT_TYPE.Elevator)
                 {
                     typeValue = nodeList[i].getElevatorGroupNum().ToString();

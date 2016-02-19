@@ -8,7 +8,7 @@ namespace Mapping
 {
     class Edge
     {
-        //private Node node1, node2;
+        
         private double length;
 
         public Edge(Node node1, Node node2)
